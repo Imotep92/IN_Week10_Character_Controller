@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class FPSControllerScript : MonoBehaviour
 {
+    #region character movement variables
     //This gives us the ability to manipulate the FPS Camera
     private Camera playerCamera;
 
@@ -31,9 +34,20 @@ public class FPSControllerScript : MonoBehaviour
 
     //Gives us access to the player's character controller
     CharacterController characterController;
+    #endregion
+    
 
+    public Image staminaBar;
+    public float stamina, maxStamina;
+    public float runCost;
+    public bool running;
 
-
+    //Called before start
+    void Awake()
+    {
+        
+    }
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -67,7 +81,7 @@ public class FPSControllerScript : MonoBehaviour
             //combining the player's local directions with player inputs
             moveDirection = (horizontalInput * transform.right) + (verticalInput * transform.forward);
 
-#region Jumping
+            #region Jumping
             //Jumping mechanic
             if (Input.GetButtonDown("Jump"))
             {
@@ -79,24 +93,36 @@ public class FPSControllerScript : MonoBehaviour
             }
             #endregion
 
-#region Run
+            #region Run
             //increases moveSpeed to the running speed
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 moveSpeed *= runMultiplier;
+                running = true;
+
             }
 
-            //Resets moevSpeed
+            //Resets moveSpeed
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 moveSpeed /= runMultiplier;
+                running = false;
+
             }
-#endregion
-        }
-            else
+
+            if (running)
             {
-                moveDirection.y -= gravity * Time.deltaTime;
+                stamina -= runCost * Time.deltaTime;
+                staminaBar.fillAmount = stamina / maxStamina;
+                if (stamina < 0) stamina = 0;
             }
+            
+            #endregion
+        }
+        else
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
 
 
         //Moves the character based on inputs
