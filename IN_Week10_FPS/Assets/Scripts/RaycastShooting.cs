@@ -42,19 +42,28 @@ public class RaycastShooting : MonoBehaviour
             StartCoroutine(ShotEffect());
 
             RaycastHit hit;
-        
-            if(Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+
+            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
             {
                 laserLine.SetPosition(1, hit.point);
+
+                ShootableBox health = hit.collider.GetComponent<ShootableBox>();
+
+                if (health != null)
+                {
+                    health.Damage(gunDamage);
+                }
+                if (hit.rigidbody != null)
+                {
+                    hit.rigidbody.AddForce(-hit.normal * hitforce);
+                }
+
             }
             else
             {
                 laserLine.SetPosition(1, fpsCam.transform.forward * weaponRange);
             }
-        }
-        
-
-        
+        } 
     }
 
     private IEnumerator ShotEffect()
@@ -65,6 +74,5 @@ public class RaycastShooting : MonoBehaviour
         yield return shotDuration;
 
         laserLine.enabled = false;
-
     }
 }
