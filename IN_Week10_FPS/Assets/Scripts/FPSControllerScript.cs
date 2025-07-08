@@ -67,7 +67,7 @@ public class FPSControllerScript : MonoBehaviour
             //combining the player's local directions with player inputs
             moveDirection = (horizontalInput * transform.right) + (verticalInput * transform.forward);
 
-#region Jumping
+            #region Jumping
             //Jumping mechanic
             if (Input.GetButtonDown("Jump"))
             {
@@ -79,7 +79,11 @@ public class FPSControllerScript : MonoBehaviour
             }
             #endregion
 
-#region Run
+            #region Crouching
+            //Crouching mechanic
+            #endregion
+
+            #region Run
             //increases moveSpeed to the running speed
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
@@ -91,7 +95,7 @@ public class FPSControllerScript : MonoBehaviour
             {
                 moveSpeed /= runMultiplier;
             }
-#endregion
+            #endregion
         }
             else
             {
