@@ -116,7 +116,7 @@ public class FPSControllerScript : MonoBehaviour
             #region stamina
 
             //Stamina drains when player is running
-            if (running)
+            if (running/* && is moving */)
             {
                 stamina -= runCost * Time.deltaTime;
                 if (stamina < 0)
@@ -159,3 +159,4 @@ public class FPSControllerScript : MonoBehaviour
         }
     }
 }
+/*EXAMPLE*/
