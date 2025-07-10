@@ -3,7 +3,8 @@ using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class ShootableBox : MonoBehaviour {
+public class ShootableBox : MonoBehaviour 
+{
 
 	//The box's current health point total
 	public int currentHealth = 3;

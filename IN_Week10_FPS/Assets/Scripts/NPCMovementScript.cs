@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCMovementScript : MonoBehaviour
+public class NPCMovementScript : ShootableBox
 {
     NavMeshAgent _agent;
     WaypointManager _wm;
@@ -23,26 +23,27 @@ public class NPCMovementScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(player.position, transform.position) < followDistance)
+        if (_agent.enabled)
         {
-            if (Vector3.Distance(player.position, transform.position) < 2)
+            if (Vector3.Distance(player.position, transform.position) < followDistance)
             {
-                Attack();
+                Follow();
+                
+                if (Vector3.Distance(player.position, transform.position) < 2)
+                {
+                    Attack();
+                }
             }
             else
             {
-                Follow();
-            }     
-        }
-        else
-        {
-            Search();
-        }
+                Search();
+            }
+        } 
     }
-
+    
     void Follow()
     {
-        _agent.destination = player.position;
+        _agent.SetDestination(player.position);
         anim.SetTrigger("Following");
     }
 
@@ -54,12 +55,12 @@ public class NPCMovementScript : MonoBehaviour
 
     void Search()
     {
-        anim.SetTrigger("Searching");
         if (Vector3.Distance(currentDestination, transform.position) < 5)
         {
             currentDestination = _wm.waypoints[Random.Range(0, _wm.waypoints.Length)].position;
             //currentDestination = transform.position + (new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10)));
         }
         _agent.destination = currentDestination;
+        anim.SetTrigger("Searching");
     }
 }

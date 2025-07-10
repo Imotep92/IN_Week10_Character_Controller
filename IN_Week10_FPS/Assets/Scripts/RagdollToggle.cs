@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-public class RagdollToggle : ShootableBox
+public class RagdollToggle : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,7 +18,10 @@ public class RagdollToggle : ShootableBox
         {
             ragdollRB.isKinematic = false;
         }
+
+        GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<Collider>().enabled = false;
+        GetComponent<Animator>().enabled = false;
     }
 
 }
