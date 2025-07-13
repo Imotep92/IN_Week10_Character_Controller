@@ -19,9 +19,11 @@ public class RagdollToggle : MonoBehaviour
             ragdollRB.isKinematic = false;
         }
 
+
         GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<Collider>().enabled = false;
         GetComponent<Animator>().enabled = false;
+        
     }
 
 }
