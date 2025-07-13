@@ -53,9 +53,16 @@ public class RaycastShooting : MonoBehaviour
                 {
                     health.Damage(gunDamage);
                 }
+                
                 if (hit.rigidbody != null)
                 {
                     hit.rigidbody.AddForce(-hit.normal * hitforce);
+                }
+
+                RagdollToggle ragdollSwitcher = hit.collider.GetComponent<RagdollToggle>();
+                if (ragdollSwitcher != null)
+                {
+                    ragdollSwitcher.triggerRagdoll();
                 }
 
             }

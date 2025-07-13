@@ -32,6 +32,8 @@ public class FPSControllerScript : MonoBehaviour
     //This represents the direction the player is moving in any given point
     Vector3 moveDirection;
 
+    private bool isMoving;
+
     //Gives us access to the player's character controller
     CharacterController characterController;
     #endregion
@@ -73,6 +75,8 @@ public class FPSControllerScript : MonoBehaviour
         rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
 
+        isMoving = moveDirection.magnitude == 0;
+        
         //Checks if the player is on the ground
         if (characterController.isGrounded)
         {
@@ -116,7 +120,7 @@ public class FPSControllerScript : MonoBehaviour
             #region stamina
 
             //Stamina drains when player is running
-            if (running)
+            if (running/* && is moving */)
             {
                 stamina -= runCost * Time.deltaTime;
                 if (stamina < 0)
@@ -159,3 +163,4 @@ public class FPSControllerScript : MonoBehaviour
         }
     }
 }
+/*EXAMPLE*/
