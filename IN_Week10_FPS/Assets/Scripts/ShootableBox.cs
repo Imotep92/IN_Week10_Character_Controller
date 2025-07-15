@@ -9,7 +9,7 @@ public class ShootableBox : MonoBehaviour
 	//The box's current health point total
 	public int currentHealth = 3;
 
-	public void Damage(int damageAmount)
+	public virtual void Damage(int damageAmount)  // make public virtual void
 	{
 		//subtract damage amount when Damage function is called
 		currentHealth -= damageAmount;

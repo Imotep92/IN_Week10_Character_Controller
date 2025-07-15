@@ -28,7 +28,7 @@ public class NPCMovementScript : ShootableBox
             if (Vector3.Distance(player.position, transform.position) < followDistance)
             {
                 Follow();
-                
+
                 if (Vector3.Distance(player.position, transform.position) < 2)
                 {
                     Attack();
@@ -38,9 +38,9 @@ public class NPCMovementScript : ShootableBox
             {
                 Search();
             }
-        } 
+        }
     }
-    
+
     void Follow()
     {
         _agent.SetDestination(player.position);
@@ -63,4 +63,20 @@ public class NPCMovementScript : ShootableBox
         _agent.destination = currentDestination;
         anim.SetTrigger("Searching");
     }
+    
+
+
+    public override void Damage(int damageAmount)  // make  public override void
+	{
+        int currentHealth = 1;
+		//subtract damage amount when Damage function is called
+        currentHealth -= damageAmount;
+
+		//Check if health has fallen below zero
+		if (currentHealth <= 0) 
+		{
+			//if health has fallen below zero, deactivate it 
+			Destroy(gameObject, 3f);
+		}
+	}
 }
