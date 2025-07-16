@@ -58,7 +58,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   shadows:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: -0.021390375}
   midtones:
     m_OverrideState: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
     m_Value: 0
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 0.061320752, g: 0.052711047, b: 0.04946155, a: 1}
+    m_Value: {r: 0.122641504, g: 0.105422094, b: 0.0989231, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
