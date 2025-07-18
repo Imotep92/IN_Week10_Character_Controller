@@ -108,7 +108,7 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ScrollSpeed: 0.07
-    - _Smoothness: 220.5
+    - _Smoothness: -29
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -122,8 +122,8 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RemapValue: {r: 3.27, g: 9.62, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tint: {r: 0.003921569, g: 0.0040888106, b: 0.007843138, a: 1}
-    - _Tint_2: {r: 0.6226415, g: 0.3945643, b: 0.17915626, a: 0}
+    - _Tint: {r: 0.0032484946, g: 0.00634124, b: 0.009433985, a: 1}
+    - _Tint_2: {r: 0.1270915, g: 0.22244215, b: 0.2264151, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6811049807771708861
