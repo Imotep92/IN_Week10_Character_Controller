@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
 
 public class FPSControllerScript : MonoBehaviour
 {
+    #region character movement variables
     //This gives us the ability to manipulate the FPS Camera
     private Camera playerCamera;
 
@@ -29,10 +32,28 @@ public class FPSControllerScript : MonoBehaviour
     //This represents the direction the player is moving in any given point
     Vector3 moveDirection;
 
+    private bool isMoving;
+
     //Gives us access to the player's character controller
     CharacterController characterController;
+    #endregion
 
 
+    #region Stamina bar variables
+    public Image staminaBar;
+    public float stamina, maxStamina;
+    public float runCost;
+    public bool running;
+
+    public float chargeRate;
+    private Coroutine recharge;
+    #endregion
+
+    //Called before start
+    void Awake()
+    {
+
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -54,6 +75,8 @@ public class FPSControllerScript : MonoBehaviour
         rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
         playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
 
+        isMoving = moveDirection.magnitude == 0;
+        
         //Checks if the player is on the ground
         if (characterController.isGrounded)
         {
@@ -79,31 +102,65 @@ public class FPSControllerScript : MonoBehaviour
             }
             #endregion
 
-            #region Crouching
-            //Crouching mechanic
-            #endregion
-
             #region Run
             //increases moveSpeed to the running speed
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 moveSpeed *= runMultiplier;
+                running = true;
             }
 
-            //Resets moevSpeed
+            //Resets moveSpeed
             if (Input.GetKeyUp(KeyCode.LeftShift))
             {
                 moveSpeed /= runMultiplier;
+                running = false;
             }
+
+            #region stamina
+
+            //Stamina drains when player is running
+            if (running/* && is moving */)
+            {
+                stamina -= runCost * Time.deltaTime;
+                if (stamina < 0)
+                {
+                    stamina = 0;
+                    moveSpeed /= runMultiplier;
+                    running = false;
+                }
+                staminaBar.fillAmount = stamina / maxStamina;
+
+                if (recharge != null) StopCoroutine(recharge);
+                recharge = StartCoroutine(RechargeStamina());
+            }
+
+            #endregion stamina
+
             #endregion
         }
-            else
-            {
-                moveDirection.y -= gravity * Time.deltaTime;
-            }
+        else
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
 
 
         //Moves the character based on inputs
         characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
     }
+
+    //RechargeStamina coroutine
+    private IEnumerator RechargeStamina()
+    {
+        yield return new WaitForSeconds(5f);
+
+        while (stamina < maxStamina)
+        {
+            stamina += chargeRate / 5f;
+            if (stamina > maxStamina) stamina = maxStamina;
+            staminaBar.fillAmount = stamina / maxStamina;
+            yield return new WaitForSeconds(.2f);
+        }
+    }
 }
+/*EXAMPLE*/
